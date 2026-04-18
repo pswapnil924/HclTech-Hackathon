@@ -1,10 +1,8 @@
-package com.hcltech.hackathon.service.impl;
-
-import com.hcltech.hackathon.service.CustomerCreditRatingService;
+package com.hcltech.hackathon.service;
 
 import java.math.BigDecimal;
 
-public class CustomerCreditRatingServiceImpl implements CustomerCreditRatingService {
+public class CustomerCreditRatingServiceImpl{
 
     private static final BigDecimal HIGH_SALARY_THRESHOLD = new BigDecimal("200000");
     private static final BigDecimal LOW_SALARY_THRESHOLD = new BigDecimal("50000");
