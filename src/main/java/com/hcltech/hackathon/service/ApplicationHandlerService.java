@@ -1,7 +1,10 @@
 package com.hcltech.hackathon.service;
 
 import com.hcltech.hackathon.dto.ApplicationResponseDto;
+import com.hcltech.hackathon.entity.User;
+import com.hcltech.hackathon.repository.UserRepository;
 import org.springframework.stereotype.Service;
+
 
 @Service
 public class ApplicationHandlerService {
@@ -14,30 +17,25 @@ public class ApplicationHandlerService {
 
 
     public ApplicationResponseDto handleApplication(Integer appId) {
-        User user = userRepository.findByApplicationId(appId);
+
+        User user = userRepository.findByApplicationId(appId)
+                .orElseThrow(() -> new RuntimeException("Application not present"));
+
         Integer creditScore = user.getCreditScore();
 
-        ApplicationResponseDto newCard = new ApplicationResponseDto();
-
-        if (creditScore < 50) {
-            newCard.setMessage("Please submit addition verification documents!");
-        } else if (creditScore >= 500) {
-            newCard.setCardNumber("676745459090");
-            newCard.setPin(5690);
-            newCard.setCartType("PLATINUM");
-            newCard.setLimit(40000);
-        } else if (creditScore >= 300) {
-            newCard.setCardNumber("676745459090");
-            newCard.setPin(5690);
-            newCard.setCartType("GOLD");
-            newCard.setLimit(20000);
-        } else if (creditScore >= 150) {
-            newCard.setCardNumber("676745459090");
-            newCard.setPin(5690);
-            newCard.setCartType("VISA");
-            newCard.setLimit(10000);
+        if (creditScore <= 50) {
+            return new ApplicationResponseDto(null, null, null, null, "Request additional verification document");
         }
 
-        return newCard;
+        if (creditScore >= 500) {
+            return new ApplicationResponseDto("PLATINUM", "676745459090", 5698, 40000, "Successful");
+        }
+
+        if (creditScore >= 300) {
+            return new ApplicationResponseDto("GOLD", "345689008768", 5698, 20000,
+                    "Successful");
+        }
+
+        return new ApplicationResponseDto("VISA", "128745632099", 5698, 10000, "Successful");
     }
 }
