@@ -16,7 +16,7 @@ public class ApplicationHandlerService {
     }
 
 
-    public ApplicationResponseDto handleApplication(Integer appId) {
+    public ApplicationResponseDto handleApplication(String appId) {
 
         User user = userRepository.findByApplicationId(appId)
                 .orElseThrow(() -> new RuntimeException("Application not present"));
@@ -24,7 +24,7 @@ public class ApplicationHandlerService {
         Integer creditScore = user.getCreditScore();
 
         if (creditScore <= 50) {
-            return new ApplicationResponseDto(null, null, null, null, "Request additional verification document");
+            return new ApplicationResponseDto(null, null, null, null, "Provide additional verification document");
         }
 
         if (creditScore >= 500) {

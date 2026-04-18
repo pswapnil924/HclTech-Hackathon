@@ -20,7 +20,7 @@ public class ApplicationHandler {
 
 
     @GetMapping("/{applicationId}")
-    public ApplicationResponseDto handleApplication(@PathVariable Integer applicationId ){
+    public ApplicationResponseDto handleApplication(@PathVariable String applicationId ){
         return  applicationHandlerService.handleApplication(applicationId);
     }
 }
